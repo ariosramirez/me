@@ -68,6 +68,7 @@
                 <a href="#summary" class="text-gray-600 hover:text-[#4A90E2] transition">Summary</a>
                 <a href="#skills" class="text-gray-600 hover:text-[#4A90E2] transition">Skills</a>
                 <a href="#experience" class="text-gray-600 hover:text-[#4A90E2] transition">Experience</a>
+                <a href="#education" class="text-gray-600 hover:text-[#4A90E2] transition">Education</a>
             </div>
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
@@ -79,6 +80,7 @@
             <a href="#summary" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Summary</a>
             <a href="#skills" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Skills</a>
             <a href="#experience" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Experience</a>
+            <a href="#education" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Education</a>
         </div>
     </header>
 
@@ -139,11 +141,8 @@
         <section id="education" class="py-16">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-3xl font-bold text-center mb-8">Education</h2>
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <h3 class="text-xl font-bold text-gray-900">Coursework in Computer Science</h3>
-                    <p class="text-md text-[#4A90E2] font-semibold">UNC-FAMAF, Córdoba</p>
-                    <p class="text-gray-500">March 2018 - 2020</p>
-                    <p class="mt-4 text-gray-700">Completed foundational coursework in algorithms, data structures, programming paradigms, and mathematical modeling.</p>
+                <div id="education-container" class="space-y-6">
+                    <!-- Education items will be injected here by JavaScript -->
                 </div>
             </div>
         </section>
@@ -176,50 +175,65 @@
                 {
                     company: 'Mutt Data, Remote',
                     role: 'Data Lead',
-                    date: 'November 2023 - Present',
+                    date: 'Nov 2023 - Present',
                     details: [
-                        'Led a team of 7 data professionals, architecting and implementing ML models for business optimization and credit scoring, heavily utilizing Python and its scientific computing stack.',
-                        'Designed and managed scalable ETL pipelines on Databricks and Airflow, processing terabytes of data for AI model training and inference.'
+                        'Leading a team of 7+ data professionals, driving innovation at a major beverage distributor through advanced ETL pipelines (Databricks, Airflow) and ML models for credit and business optimization.'
                     ]
                 },
                 {
                     company: 'Beek.io, Remote',
-                    role: 'Data Lead',
-                    date: 'October 2020 - June 2024',
+                    role: 'Data Lead (hands on)',
+                    date: 'Oct 2020 - Jun 2024',
                     details: [
                         'Engineered and deployed end-to-end NLP and GenAI-powered recommendation systems, directly impacting user engagement and content discovery.',
                         'Developed and maintained a robust data platform using GCP, ensuring data integrity and availability for all AI initiatives.',
-                        'Streamlined data processing workflows, reducing ETL execution times by 70% using dbt, Airflow, and Hevo, which fed into ML model training pipelines.',
-                        'Built a royalty calculation system that saved 60% in operational costs, applying complex business logic through automated Python scripts.'
+                        'Streamlined data processing workflows, reducing ETL execution times by 70% using dbt, Airflow, and Hevo.',
+                        'Built a royalty calculation system that saved 60% in operational costs through automated Python scripts.'
                     ]
                 },
                 {
                     company: 'Mercado Libre, Córdoba Capital',
                     role: 'Data Scientist',
-                    date: 'June 2019 - October 2020',
+                    date: 'Jun 2019 - Oct 2020',
                     details: [
                         'Developed and deployed machine learning models in Python to detect and prevent fraudulent activity, successfully reducing fraud-related losses by 15% ($750K USD annually).',
-                        'Performed in-depth exploratory data analysis on massive datasets using SQL to identify complex fraud patterns and inform model development.'
+                        'Performed in-depth exploratory data analysis on massive datasets using SQL to identify complex fraud patterns.'
                     ]
                 },
                 {
                     company: 'CoreBI, Córdoba Capital',
                     role: 'Data Scientist',
-                    date: 'June 2018 - May 2019',
+                    date: 'Jun 2018 - May 2019',
                     details: [
-                        'Applied Neural Networks and computer vision techniques for advanced video analysis, building models to extract actionable insights from unstructured visual data.',
+                        'Applied Neural Networks and computer vision techniques for advanced video analysis.',
                         'Constructed and trained various ML models to solve key business challenges for clients.'
                     ]
                 },
                 {
                     company: 'Dasos, Freelancer',
                     role: 'Machine Learning Engineer',
-                    date: 'August 2018 - May 2020',
+                    date: 'Aug 2018 - May 2020',
                     details: [
                         'Designed and implemented scalable cloud architectures on Digital Ocean for deploying ML applications, utilizing Docker for containerization.',
                         'Developed Time Series forecasting models for cold chain tracking and created real-time monitoring dashboards with Grafana.'
                     ]
                 }
+            ];
+
+            // Education Data
+            const educations = [
+                 {
+                    institution: 'Universidad Nacional de Córdoba',
+                    degree: 'Coursework in Computer Science',
+                    date: '2018 - 2020',
+                    description: 'Completed foundational coursework in algorithms, data structures, programming paradigms, and mathematical modeling.'
+                },
+                {
+                    institution: 'Platzi',
+                    degree: 'Data, Engineering, AI, Business.',
+                    date: 'Always inprogress',
+                    description: 'Completed coursework focused on Data Science principles, tools, and applications.'
+                },
             ];
 
             // Populate Timeline
@@ -250,6 +264,20 @@
                     const details = document.getElementById(`details-${index}`);
                     details.classList.toggle('hidden');
                 }
+            });
+
+            // Populate Education
+            const educationContainer = document.getElementById('education-container');
+            educations.forEach(edu => {
+                const item = document.createElement('div');
+                item.className = 'bg-white p-8 rounded-lg shadow-md';
+                item.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-900">${edu.degree}</h3>
+                    <p class="text-md text-[#4A90E2] font-semibold">${edu.institution}</p>
+                    <p class="text-gray-500">${edu.date}</p>
+                    <p class="mt-4 text-gray-700">${edu.description}</p>
+                `;
+                educationContainer.appendChild(item);
             });
 
             // Chart.js Configuration
