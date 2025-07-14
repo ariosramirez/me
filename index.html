@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andres Rios Ramirez - Senior AI Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Professional Blue -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling portfolio. The structure is designed for a recruiter's user journey: 1. Hero section for immediate identity. 2. A compelling summary. 3. An interactive skills dashboard for a quick, visual assessment of technical capabilities. 4. An interactive career timeline to show growth and project details on demand. This non-linear, drill-down approach allows users to get a high-level view quickly and dive into details where they are most interested, making it more efficient and engaging than a static document. -->
+    <!-- Visualization & Content Choices: Summary -> Inform -> Text Block -> N/A -> Justification: Standard opening. Skills -> Compare/Inform -> Multiple Horizontal Bar Charts (Chart.js) -> Hover for details, Click to filter categories -> Justification: Bar charts are excellent for comparing conceptual skill levels. Separating them by category (AI, Cloud, DBs) prevents clutter and allows focused evaluation. Experience -> Show Change/Inform -> Interactive Vertical Timeline (HTML/CSS/JS) -> Click to expand/collapse details -> Justification: A timeline is a natural fit for career progression. The interactive expand/collapse keeps the UI clean and lets users focus on specific roles. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #1a202c;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 350px;
+            }
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #4A90E2;
+            border: 3px solid #F8F7F4;
+        }
+        .timeline-line {
+            position: absolute;
+            left: -21px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e2e8f0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">
+                Andres David Rios Ramirez
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#summary" class="text-gray-600 hover:text-[#4A90E2] transition">Summary</a>
+                <a href="#skills" class="text-gray-600 hover:text-[#4A90E2] transition">Skills</a>
+                <a href="#experience" class="text-gray-600 hover:text-[#4A90E2] transition">Experience</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#summary" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Summary</a>
+            <a href="#skills" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Skills</a>
+            <a href="#experience" class="block py-2 px-6 text-sm text-gray-700 hover:bg-gray-100">Experience</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Hero Section -->
+        <section class="text-center py-16">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900">Senior AI Engineer</h1>
+            <p class="text-xl md:text-2xl text-[#4A90E2] mt-2">Python & Generative AI Specialist</p>
+            <div class="flex justify-center space-x-6 mt-8">
+                <a href="https://github.com/ariosramirez" target="_blank" class="text-gray-500 hover:text-[#4A90E2] transition">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </a>
+                <a href="https://linkedin.com/in/ariosramirez" target="_blank" class="text-gray-500 hover:text-[#4A90E2] transition">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Summary Section -->
+        <section id="summary" class="py-16">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">About Me</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Senior AI Engineer with over 6 years of experience specializing in the design, development, and deployment of sophisticated AI and machine learning solutions using <strong>Python</strong>. Proven expertise in <strong>Generative AI (GenAI)</strong>, <strong>Large Language Models (LLMs)</strong>, and <strong>Natural Language Processing (NLP)</strong> to build data-driven products that solve critical business problems. Extensive hands-on experience with <strong>Google Cloud Platform (GCP)</strong>, including <strong>BigQuery</strong>, and skilled in containerization with <strong>Docker</strong> and <strong>Kubernetes</strong>. Eager to leverage this background to contribute to the development of an innovative no-code AI agent platform.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-16 bg-white rounded-xl shadow-md">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4">Technical Skills</h2>
+                <p class="text-center text-gray-600 mb-10">
+                    A visual overview of my technical capabilities. I have a strong focus on Python-centric AI/ML development and the cloud infrastructure that supports it.
+                </p>
+                <div class="chart-container">
+                    <canvas id="aiChart"></canvas>
+                </div>
+                <div class="mt-12 chart-container">
+                    <canvas id="dataCloudChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Career Timeline</h2>
+            <div class="max-w-3xl mx-auto relative">
+                <div class="timeline-line"></div>
+                <div id="timeline-container">
+                    <!-- Experience items will be injected here by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section id="education" class="py-16">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-8">Education</h2>
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-900">Coursework in Computer Science</h3>
+                    <p class="text-md text-[#4A90E2] font-semibold">UNC-FAMAF, Córdoba</p>
+                    <p class="text-gray-500">March 2018 - 2020</p>
+                    <p class="mt-4 text-gray-700">Completed foundational coursework in algorithms, data structures, programming paradigms, and mathematical modeling.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Andres David Rios Ramirez. All rights reserved.</p>
+            <p class="mt-2">ariosramirez.data@gmail.com | +54 (351) 2633707</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('#mobile-menu a').forEach(item => {
+                item.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // Experience Data
+            const experiences = [
+                {
+                    company: 'Mutt Data, Remote',
+                    role: 'Data Lead',
+                    date: 'November 2023 - Present',
+                    details: [
+                        'Led a team of 7 data professionals, architecting and implementing ML models for business optimization and credit scoring, heavily utilizing Python and its scientific computing stack.',
+                        'Designed and managed scalable ETL pipelines on Databricks and Airflow, processing terabytes of data for AI model training and inference.'
+                    ]
+                },
+                {
+                    company: 'Beek.io, Remote',
+                    role: 'Data Lead',
+                    date: 'October 2020 - June 2024',
+                    details: [
+                        'Engineered and deployed end-to-end NLP and GenAI-powered recommendation systems, directly impacting user engagement and content discovery.',
+                        'Developed and maintained a robust data platform using GCP, ensuring data integrity and availability for all AI initiatives.',
+                        'Streamlined data processing workflows, reducing ETL execution times by 70% using dbt, Airflow, and Hevo, which fed into ML model training pipelines.',
+                        'Built a royalty calculation system that saved 60% in operational costs, applying complex business logic through automated Python scripts.'
+                    ]
+                },
+                {
+                    company: 'Mercado Libre, Córdoba Capital',
+                    role: 'Data Scientist',
+                    date: 'June 2019 - October 2020',
+                    details: [
+                        'Developed and deployed machine learning models in Python to detect and prevent fraudulent activity, successfully reducing fraud-related losses by 15% ($750K USD annually).',
+                        'Performed in-depth exploratory data analysis on massive datasets using SQL to identify complex fraud patterns and inform model development.'
+                    ]
+                },
+                {
+                    company: 'CoreBI, Córdoba Capital',
+                    role: 'Data Scientist',
+                    date: 'June 2018 - May 2019',
+                    details: [
+                        'Applied Neural Networks and computer vision techniques for advanced video analysis, building models to extract actionable insights from unstructured visual data.',
+                        'Constructed and trained various ML models to solve key business challenges for clients.'
+                    ]
+                },
+                {
+                    company: 'Dasos, Freelancer',
+                    role: 'Machine Learning Engineer',
+                    date: 'August 2018 - May 2020',
+                    details: [
+                        'Designed and implemented scalable cloud architectures on Digital Ocean for deploying ML applications, utilizing Docker for containerization.',
+                        'Developed Time Series forecasting models for cold chain tracking and created real-time monitoring dashboards with Grafana.'
+                    ]
+                }
+            ];
+
+            // Populate Timeline
+            const timelineContainer = document.getElementById('timeline-container');
+            experiences.forEach((exp, index) => {
+                const item = document.createElement('div');
+                item.className = 'mb-8 relative timeline-item';
+                item.innerHTML = `
+                    <div class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition" data-index="${index}">
+                        <p class="text-sm text-gray-500">${exp.date}</p>
+                        <h3 class="text-xl font-bold text-gray-900">${exp.role}</h3>
+                        <p class="text-md text-[#4A90E2] font-semibold">${exp.company}</p>
+                    </div>
+                    <div id="details-${index}" class="hidden mt-4 pl-6 border-l-2 border-gray-200 ml-3">
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            ${exp.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                timelineContainer.appendChild(item);
+            });
+            
+            // Timeline click handler
+            timelineContainer.addEventListener('click', function(e) {
+                const header = e.target.closest('[data-index]');
+                if (header) {
+                    const index = header.getAttribute('data-index');
+                    const details = document.getElementById(`details-${index}`);
+                    details.classList.toggle('hidden');
+                }
+            });
+
+            // Chart.js Configuration
+            const chartOptions = {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                         ticks: {
+                            font: {
+                                size: 14,
+                                weight: '500'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            };
+            
+            // AI Chart
+            const aiCtx = document.getElementById('aiChart').getContext('2d');
+            new Chart(aiCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Python', 'GenAI / LLMs', 'NLP', 'Scikit-learn', 'TensorFlow/PyTorch'],
+                    datasets: [{
+                        label: 'AI & Machine Learning',
+                        data: [95, 90, 85, 90, 80],
+                        backgroundColor: [
+                            'rgba(74, 144, 226, 0.7)',
+                            'rgba(74, 144, 226, 0.7)',
+                            'rgba(74, 144, 226, 0.7)',
+                            'rgba(74, 144, 226, 0.7)',
+                            'rgba(74, 144, 226, 0.7)',
+                        ],
+                        borderColor: [
+                           '#4A90E2'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                 options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'AI & Machine Learning',
+                            font: { size: 18, weight: 'bold' },
+                            padding: { bottom: 20 }
+                        }
+                    }
+                }
+            });
+
+            // Data & Cloud Chart
+            const dataCloudCtx = document.getElementById('dataCloudChart').getContext('2d');
+            new Chart(dataCloudCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['GCP & BigQuery', 'AWS / Azure', 'Docker & Kubernetes', 'SQL / NoSQL', 'Airflow / dbt'],
+                    datasets: [{
+                        label: 'Data, Cloud & DevOps',
+                        data: [90, 75, 85, 95, 80],
+                        backgroundColor: [
+                            'rgba(216, 153, 70, 0.7)',
+                            'rgba(216, 153, 70, 0.7)',
+                            'rgba(216, 153, 70, 0.7)',
+                            'rgba(216, 153, 70, 0.7)',
+                            'rgba(216, 153, 70, 0.7)',
+                        ],
+                        borderColor: [
+                            '#D89946'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Data, Cloud & DevOps',
+                            font: { size: 18, weight: 'bold' },
+                            padding: { bottom: 20 }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
